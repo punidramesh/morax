@@ -1,9 +1,10 @@
-from flask import Flask, request, redirect
+from flask import Flask, request, render_template, redirect
 from dotenv import load_dotenv
 import os, requests, json
-
-app = Flask(__name__)
-load_dotenv('.env')
+from requests_oauthlib import OAuth2Session
+app = Flask(__name__, template_folder='templates')
+app.config['SECRET_KEY'] = os.getenv('SECRET')
+load_dotenv('../.env')
 REDIRECT_URL = os.getenv('REDIRECT_URL')
 clientID = os.getenv('CLIENTID')
 secret = os.getenv('CLIENT_SECRET')
@@ -14,22 +15,18 @@ access_token = ""
 
 @app.route('/')
 def hello():
-	return redirect("https://www.coinbase.com/oauth/authorize?response_type=code&client_id=7446410997bffc1c989aa8f54600a628176aede236a88d05ea55a1f0c14f059a&redirect_uri=https://localhost:5000/auth/coinbase/redirect&state=134ef5504a94&scope=wallet:user:read,wallet:accounts:read", code=302)
+	return redirect(f"https://www.coinbase.com/oauth/authorize?response_type=code&client_id={clientID}&redirect_uri={REDIRECT_URL}&state={state}&scope=wallet:user:read,wallet:accounts:read", code=302)
 
-@app.route('/auth/coinbase/redirect')
+@app.route('/auth/redirect')
 def getResponse():
-	print("Inside")
 	code = request.args.get("code")
 	if code != None:
 		ACCESS_URI = f"https://www.coinbase.com/oauth/token?grant_type=authorization_code&code={code}&client_id={clientID}&client_secret={secret}&redirect_uri={REDIRECT_URL}"
 		at = requests.post(ACCESS_URI).json()
-		return at['access_token']
+		access_token = at['access_token']
+		return render_template('complete.html')
 	else:
-    		return "Invalid token"
-
-@app.route('/auth/coinbase/callback')
-def complete():
-	return access_token
+			return render_template('error.html')
 
 if __name__ == '__main__':
-	app.run(ssl_context='adhoc', debug=True)
+	app.run(port=PORT)
