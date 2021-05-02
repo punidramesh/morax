@@ -43,8 +43,8 @@
 	</style>
 	<body>
 		<div style = "position:absolute;" class = "info">
-			<img height = "100px" class = "center" src = '../img/error.svg'>
-			<h2>{{message}}</h2>
+			<img height = "100px" class = "center" src = "{{url_for('static', filename='error.svg')}}">
+			<h2>Authentication error</h2>
     	</div>
 	</body>
 </html>
