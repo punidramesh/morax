@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 import os, requests, time
 from webbrowser import open_new
 
-load_dotenv('.env')
+load_dotenv()
 REDIRECT_URL = os.getenv('REDIRECT_URL')
 clientID = os.getenv('CLIENTID')
 secret = os.getenv('CLIENT_SECRET')
@@ -17,6 +17,3 @@ def auth():
         + REDIRECT_URL + '&state=' + state
         + '&scope=wallet:user:read,wallet:accounts:read' + '&code=' + '302')
     open_new(AUTH_URI)
- 
-def pid():
-    return os.getpid()
