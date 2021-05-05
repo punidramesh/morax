@@ -4,16 +4,20 @@ from webbrowser import open_new
 from auth.auth import renewAccessToken
 
 load_dotenv()
-login_status = os.getenv('LOGIN_STATUS')
 REDIRECT_URL = os.getenv('REDIRECT_URL')
 clientID = os.getenv('CLIENTID')
 secret = os.getenv('CLIENT_SECRET')
 state = os.getenv('STATE')
 TERMINATE = os.getenv('TERMINATE')
 
-def renew():
-    if time.time() - float(os.getenv('TIME')) > 7200:
-        renewAccessToken()
+def init():
+    if os.getenv('LOGIN_STATE') == 'FALSE':
+        login()
+    else:
+        if time.time() - float(os.getenv('TIME')) <= 7200:
+            renewAccessToken()
+        else:
+            login()
 
 def login():
     path = pathlib.Path().absolute()
@@ -25,4 +29,4 @@ def login():
         + '&scope=wallet:user:read,wallet:accounts:read' + '&code=' + '302')
     open_new(AUTH_URI)
 
-login()
+init()

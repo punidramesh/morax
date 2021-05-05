@@ -34,7 +34,7 @@ def renewAccessToken():
 	at = requests.post(REFRESH_URI).json()
 	access_token = at['access_token']
 	refresh_token = at['refresh_token']
-	saveInfo()
+	saveInfo(access_token, refresh_token)
 
 def shutdown_server():
 	func = request.environ.get('werkzeug.server.shutdown')
@@ -51,8 +51,9 @@ def hello():
 @app.route('/auth/redirect')
 def getResponse():
 	code = request.args.get("code")
+	state = request.args.get("state")
 	try:
-		if code != None:
+		if code != None and state == STATE:
 			ACCESS_URI = f"https://www.coinbase.com/oauth/token?grant_type=authorization_code&code={code}&client_id={clientID}&client_secret={secret}&redirect_uri={REDIRECT_URL}"
 			at = requests.post(ACCESS_URI).json()
 			access_token = at['access_token']
