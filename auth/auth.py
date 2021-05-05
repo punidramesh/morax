@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template, redirect
-from dotenv import load_dotenv
+import dotenv
 import os, requests, subprocess, sys, time
 
 #removes flask's init messages on CLI
@@ -13,7 +13,9 @@ app = Flask(__name__, template_folder='templates')
 app.config['SECRET_KEY'] = os.getenv('SECRET')
 
 #Load env variables
-load_dotenv()
+dotenv_file = dotenv.find_dotenv()
+dotenv.load_dotenv(dotenv_file)
+
 REDIRECT_URL = os.getenv('REDIRECT_URL')
 clientID = os.getenv('CLIENTID')
 secret = os.getenv('CLIENT_SECRET')
@@ -22,9 +24,9 @@ access_token = ""
 refresh_token = ""
 
 def saveInfo(access_token, refresh_token):
-	subprocess.call("echo TIME=" + str(time.time()) + " >> .env",shell=True)
-	subprocess.call("echo ACCESS_TOKEN=" + access_token + " >> .env",shell=True)
-	subprocess.call("echo REFRESH_TOKEN=" + refresh_token + " >> .env",shell=True)
+	dotenv.set_key(dotenv_file, 'TIME', str(time.time()))
+	dotenv.set_key(dotenv_file, 'ACCESS_TOKEN', access_token)
+	dotenv.set_key(dotenv_file, 'REFRESH_TOKEN', refresh_token)
 
 def renewAccessToken():
 	REFRESH_TOKEN = os.getenv('REFRESH_TOKEN')
@@ -35,13 +37,10 @@ def renewAccessToken():
 	saveInfo()
 
 def shutdown_server():
-    func = request.environ.get('werkzeug.server.shutdown')
-    if func is None:
-        raise RuntimeError('Not running with the Werkzeug Server')
-
-@app.route('/shutdown', methods=['GET'])
-def shutdown():
-    shutdown_server()
+	func = request.environ.get('werkzeug.server.shutdown')
+	if func is None:
+		raise RuntimeError('Not running with the Werkzeug Server')
+	func()
 
 #default route
 @app.route('/')
@@ -63,11 +62,12 @@ def getResponse():
 				return render_template('error.html')
 
 			saveInfo(access_token, refresh_token)
+			dotenv.set_key(dotenv_file, 'LOGIN_STATE', 'TRUE')
 			return render_template('complete.html')
 		else:
 			return render_template('error.html')
 	finally:
-		sys.exit(0)
+		shutdown_server()
 
 if __name__ == '__main__':
 	app.run(port=6660)
