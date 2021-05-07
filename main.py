@@ -39,4 +39,4 @@ def login():
         '&meta[send_limit_currency]=USD'+'&code=' + '302')
     open_new(AUTH_URI)
 
-print(api.getBalance("BTC"))
+print(api.getBalance("XLM"))
