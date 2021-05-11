@@ -1,6 +1,7 @@
 import requests, os, json, random, string, sys
 from dotenv import load_dotenv
-#Testing API endpoints
+load_dotenv()
+
 s = requests.session()
 
 def getAccountID():
@@ -101,3 +102,23 @@ def requestMoney(sender_addr, amount, coin):
 				'CB-VERSION':"2017-12-09"}, 
 			params = params).json()
 			return "Request for " + data["data"]["amount"]["amount"] + " " + coin + "successful"
+
+def getSpotPrice(coin):
+	currency = coin+"-INR"
+	URI = f"https://api.coinbase.com/v2/prices/{currency}/spot"
+	data = s.get(URI, 
+		headers={'Authorization': "Bearer "	+ os.getenv('ACCESS_TOKEN'), 
+				'CB-VERSION':"2017-12-09"
+		}).json()
+	return data['data']['amount']
+
+def getRSI():
+	URI = "https://quantifycrypto.com/api/v1.0-beta/relative-strength-index"
+	data = s.get(URI, 
+			headers={
+				'Qc-Access-Key-Id': os.getenv('QUANTIFY_API_KEY'), 
+				'Qc-Secret-Key': os.getenv('QUANTIFY_SECRET_KEY')
+			}).json()
+	print(data)
+
+getRSI()

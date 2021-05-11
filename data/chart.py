@@ -19,15 +19,20 @@ def getTime(curr):
 def getChartData(coin): 
     l1 = getTime(datetime.datetime.fromtimestamp(time.time() - 3600.0*24.0*7.0*4.0))
     start = l1[0] + "-" + l1[1] + "-" + l1[2]
-
-    URL = f"https://api.nomics.com/v1/currencies/sparkline?key={KEY}&ids={coin}&start={start}T00%3A00%3A00Z"
+    region = "INR"
+    URL = f"https://api.nomics.com/v1/currencies/sparkline?key={KEY}&ids={coin}&start={start}T00%3A00%3A00Z&convert={region}"
     r = requests.get(url=URL).json()
     prices = [float(i) for i in r[0]['prices']]
     config = {
-        'height' : 12
+        'height' : 14,
+        'colors' : [
+            asciichartpy.blue,
+            asciichartpy.green,
+            asciichartpy.default, 
+        ]
     }
     print(asciichartpy.plot( prices,
         cfg=config
         )
     )
-getChartData('BTC')
+getChartData('ETH')
