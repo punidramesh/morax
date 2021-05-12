@@ -8,7 +8,7 @@ log.setLevel(logging.ERROR)
 cli = sys.modules['flask.cli']
 cli.show_server_banner = lambda *x: None
 
-app = Flask(__name__, template_folder='templates')
+app = Flask(__name__, template_folder='templates', static_folder='static')
 app.config['SECRET_KEY'] = os.getenv('SECRET')
 
 #Load env variables
@@ -45,7 +45,6 @@ def getResponse():
 				return render_template('error.html')
 
 			saveInfo(access_token, refresh_token)
-			dotenv.set_key(dotenv_file, 'LOGIN_STATE', 'TRUE')
 			return render_template('complete.html')
 		else:
 			return render_template('error.html')

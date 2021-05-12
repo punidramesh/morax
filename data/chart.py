@@ -35,4 +35,3 @@ def getChartData(coin):
         cfg=config
         )
     )
-getChartData('ETH')

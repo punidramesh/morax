@@ -1,6 +1,8 @@
 import requests, os, json, random, string, sys
+from binance.client import Client
 from dotenv import load_dotenv
 load_dotenv()
+import asciichartpy
 
 s = requests.session()
 
@@ -58,7 +60,7 @@ def sendMoney(receiver_addr, amount, coin):
 	accountID = getAccountID()
 	URI = "https://api.coinbase.com/v2/accounts/"
 	idem = ''.join(random.choice(string.ascii_uppercase 
-        + string.ascii_lowercase + string.digits) for _ in range(16))
+		+ string.ascii_lowercase + string.digits) for _ in range(16))
 	params = {
 		'type':'send', 
 		'to':receiver_addr,
@@ -112,7 +114,28 @@ def getSpotPrice(coin):
 		}).json()
 	return data['data']['amount']
 
-def getRSI():
+def getRSI(coin):
+	price = []
+	client = Client(os.getenv('BINANCE_API_KEY'), os.getenv('BINANCE_SECRET_KEY'))
+	klines = client.get_historical_klines(f"{coin}USDT", Client.KLINE_INTERVAL_30MINUTE, "11 May, 2021", "12 May, 2021")
+	usdt = float(getSpotPrice('USDT'))
+	for i in klines:
+		price.append(float(i[1])*usdt)
+	config = {
+		'height' : 14,
+		'colors' : [
+			asciichartpy.blue,
+			asciichartpy.green,
+			asciichartpy.default, 
+		]
+	}
+	print(asciichartpy.plot(price,
+		cfg=config
+		)
+	)
+
+
+'''
 	URI = "https://quantifycrypto.com/api/v1.0-beta/relative-strength-index"
 	data = s.get(URI, 
 			headers={
@@ -120,5 +143,4 @@ def getRSI():
 				'Qc-Secret-Key': os.getenv('QUANTIFY_SECRET_KEY')
 			}).json()
 	print(data)
-
-getRSI()
+'''
