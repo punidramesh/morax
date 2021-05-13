@@ -4,13 +4,8 @@ async-timeout==3.0.1
 attrs==21.2.0
 certifi==2020.12.5
 chardet==4.0.0
-click==7.1.2
 dateparser==1.0.0
-Flask==1.1.2
 idna==2.10
-itsdangerous==1.1.0
-Jinja2==2.11.3
-MarkupSafe==1.1.1
 multidict==5.1.0
 python-binance==1.0.8
 python-dateutil==2.8.1
@@ -24,5 +19,4 @@ tzlocal==2.1
 ujson==4.0.2
 urllib3==1.26.4
 websockets==9.0.1
-Werkzeug==1.0.1
 yarl==1.6.3

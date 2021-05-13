@@ -133,14 +133,3 @@ def getRSI(coin):
 		cfg=config
 		)
 	)
-
-
-'''
-	URI = "https://quantifycrypto.com/api/v1.0-beta/relative-strength-index"
-	data = s.get(URI, 
-			headers={
-				'Qc-Access-Key-Id': os.getenv('QUANTIFY_API_KEY'), 
-				'Qc-Secret-Key': os.getenv('QUANTIFY_SECRET_KEY')
-			}).json()
-	print(data)
-'''

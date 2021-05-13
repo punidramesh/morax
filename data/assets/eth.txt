@@ -1,0 +1,23 @@
+           :
+          M:
+         MM:::
+        MMM::::
+       MMMM:::::
+     MMMMMM:::::;
+    MMMMMMM;:::::;
+   MMMMMMM  *;::';;
+  MMMMM  *;:M  ;:';;
+ MMMM  *::':MMMM *:;;
+M    ;::::::MMMMMMM  * 
+  ::::::::::MMMMMMMM 
+*;   ;::::::MMMMMM  M
+ ;":*  *::':MMMM MMM
+  ;"":*  *;:M  MMMM
+   ;"""';   MMMMMM
+    :""""';MMMMMM
+     :"""""MMMMM
+      :""""MMMM
+       :"""MM
+        :""M
+         :M
+          :
