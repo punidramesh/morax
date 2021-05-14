@@ -86,4 +86,38 @@ def ethereum():
     if i == len(eth) - 1:
         chart.getChartData('ETH')
 
-ethereum()
+def litecoin():
+    ltc = open('assets/ltc.txt', 'r')
+    ltc = ltc.readlines()
+    price = float(api.getSpotPrice('LTC'))
+    Balance = api.getBalance('LTC')
+    balance = float(Balance[:len(Balance) - 4])
+    i = 0
+    for i in range(len(ltc)):
+        temp = ltc[i].rstrip("\n")
+        if i == 4:
+            print(u"\u001b[38;5;246m" + 2*" " + temp, end = "")
+            print(u"\u001b[38;5;246m" + 5*' ' + "Litecoin")
+        elif i == 5:
+            print(u"\u001b[38;5;246m" + 2*" " + temp, end = "")
+            print(u"\u001b[37m" + 5*' ' + "---------")
+        elif i == 6:
+            print(u"\u001b[38;5;246m" + 2*" " + temp, end = "")
+            print(u"\u001b[38;5;246m" + 5*' ' + "Current Price" + u"\u001b[37m" +": INR " + str(price))
+        elif i == 7:
+            print(u"\u001b[38;5;246m"   + 2*" " + temp, end = "")
+            print(u"\u001b[38;5;246m" + 5*' ' + "Wallet Amount" + u"\u001b[37m" +": " + str(Balance))
+        elif i == 8:
+            print(u"\u001b[38;5;246m" + 2*" " + temp, end = "")
+            print(u"\u001b[38;5;246m" + 5*' ' + "Current Worth" + u"\u001b[37m" +": INR " + str(price * balance))
+        elif i == 9:
+            print(u"\u001b[38;5;246m" + 2*" " + temp, end = "")
+            print(u"\u001b[38;5;246m" + 5*' ' + "Address" + u"\u001b[37m" +": " + api.getAddress('LTC'))
+        else:
+            print(u"\u001b[38;5;246m" + 2*" " + temp)
+    
+    print(u"\u001b[37m" + " ")
+    if i == len(ltc) - 1:
+        chart.getChartData('LTC')
+
+litecoin()
