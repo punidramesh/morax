@@ -32,7 +32,6 @@ def getBalance(coin):
 			return data["data"]["balance"]["amount"] + " " + key
 
 def getAddress(coin):
-	address = {}
 	accountID = getAccountID()
 	URI = "https://api.coinbase.com/v2/accounts/"
 	for key, value in accountID.items():
@@ -42,6 +41,11 @@ def getAddress(coin):
 				headers={'Authorization': "Bearer "	+ os.getenv('ACCESS_TOKEN'), 
 						'CB-VERSION':"2017-12-09"
 				}).json()
+			if coin == "XLM":
+				address = data["data"][0]['address']
+				memo = address[-10:]
+				address = address[:len(address) - 19]
+				return [address, memo]
 			return data["data"][0]['address']
 
 def createAddress(coin):
@@ -58,6 +62,36 @@ def createAddress(coin):
 
 def sendMoney(receiver_addr, amount, coin):
 	accountID = getAccountID()
+	URI = "https://api.coinbase.com/v2/accounts/"
+	idem = ''.join(random.choice(string.ascii_uppercase 
+		+ string.ascii_lowercase + string.digits) for _ in range(16))
+	params = {
+		'type':'send', 
+		'to':receiver_addr,
+		'amount': amount, 
+		'currency': coin, 
+		'idem': idem
+	}
+	for key, value in accountID.items():
+		if(coin == key):
+			data = s.post(URI, 
+				headers={
+				'Authorization': "Bearer "+ os.getenv('ACCESS_TOKEN'), 
+				'CB-VERSION':"2017-12-09"}, 
+				params = params).json()
+			print("Enter Two-step verification code to continue")
+			code = str(input())
+			data = s.post(URI, 
+			headers={'Authorization': "Bearer " + os.getenv('ACCESS_TOKEN'), 
+					'CB-VERSION':"2017-12-09",
+					'CB-2FA-Token': code
+					}, 
+			params = params).json()
+			return "Sent " + data["data"]["amount"]["amount"][1:] 
+			+ " to " + receiver_addr 
+
+def sendMoneyParams(receiver_addr,extra, amount, coin):
+    accountID = getAccountID()
 	URI = "https://api.coinbase.com/v2/accounts/"
 	idem = ''.join(random.choice(string.ascii_uppercase 
 		+ string.ascii_lowercase + string.digits) for _ in range(16))
@@ -105,14 +139,44 @@ def requestMoney(sender_addr, amount, coin):
 			params = params).json()
 			return "Request for " + data["data"]["amount"]["amount"] + " " + coin + "successful"
 
+def requestMoneyParams(sender_addr, extra, amount, coin):
+    accountID = getAccountID()
+	URI = "https://api.coinbase.com/v2/accounts/"
+	params = {
+		'type':'request', 
+		'to':sender_addr,
+		'amount': amount, 
+		'currency': coin,
+	}
+	for key, value in accountID.items():
+		if(coin == key):
+			URI = URI + str(value) + "/transactions"
+			data = s.post(URI, 
+			headers={
+				'Authorization': "Bearer "+ os.getenv('ACCESS_TOKEN'), 
+				'CB-VERSION':"2017-12-09"}, 
+			params = params).json()
+			return "Request for " + data["data"]["amount"]["amount"] + " " + coin + "successful"
+
 def getSpotPrice(coin):
+	
+	if coin == "XRP":
+		client = Client(os.getenv('BINANCE_API_KEY'), os.getenv('BINANCE_SECRET_KEY'))
+		tickers = client.get_avg_price(symbol='XRPUSDT')
+		usdt = float(getSpotPrice('USDT'))
+		return float(tickers['price'])*usdt
+
 	currency = coin+"-INR"
 	URI = f"https://api.coinbase.com/v2/prices/{currency}/spot"
 	data = s.get(URI, 
 		headers={'Authorization': "Bearer "	+ os.getenv('ACCESS_TOKEN'), 
 				'CB-VERSION':"2017-12-09"
 		}).json()
-	return data['data']['amount']
+	keys = data.keys()
+	if "data" in keys:
+		return data['data']['amount']
+	else:
+		return "Data unavailable"
 
 def getRSI(coin):
 	price = []
