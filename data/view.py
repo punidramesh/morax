@@ -157,4 +157,40 @@ def stellar():
         else:
             print(u"\u001b[38;5;240m" + 2*" " + temp)
     
-stellar()
+def ripple():
+    xrp = open('assets/xrp.txt', 'r')
+    xrp = xrp.readlines()
+    price = float(api.getSpotPrice('XRP'))
+    Balance = api.getBalance('XRP')
+    balance = float(Balance[:len(Balance) - 4])
+    address = api.getAddress('XRP')
+    i = 0
+    for i in range(len(xrp)):
+        temp = xrp[i].rstrip("\n")
+        if i == 4:
+            print(u"\u001b[38;5;237m" + 2*" " + temp, end = "")
+            print(u"\u001b[38;5;237m" + 3*' ' + "Ripple")
+        elif i == 5:
+            print(u"\u001b[38;5;237m" + 2*" " + temp, end = "")
+            print(u"\u001b[37m" + 3*' ' + "--------")
+        elif i == 6:
+            print(u"\u001b[38;5;237m" + 2*" " + temp, end = "")
+            print(u"\u001b[38;5;237m" + 29*' ' + "Current Price" + u"\u001b[37m" +": INR " + "{:.6f}".format(price))
+        elif i == 7:
+            print(u"\u001b[38;5;237m"   + 2*" " + temp, end = "")
+            print(u"\u001b[38;5;237m" + 3*' ' + "Wallet Amount" + u"\u001b[37m" +": " + str(Balance))
+        elif i == 8:
+            print(u"\u001b[38;5;237m" + 2*" " + temp, end = "")
+            print(u"\u001b[38;5;237m" + 3*' ' + "Current Worth" + u"\u001b[37m" +": INR " + "{:.4f}".format(price * balance))
+        elif i == 9:
+            print(u"\u001b[38;5;237m" + 2*" " + temp, end = "")
+            print(u"\u001b[38;5;237m" + 3*' ' + "Address" + u"\u001b[37m" +": " + address[0][:26])
+        elif i == 10:
+            print(u"\u001b[38;5;237m" + 2*" " + temp, end = "")
+            print(3*' ' + u"\u001b[37m" + address[0][26:])
+        elif i == 11:
+            print(u"\u001b[38;5;237m" + 2*" " + temp, end = "")
+            print(u"\u001b[38;5;237m" + 3*' ' + "Tag" + u"\u001b[37m" +": " + address[1])
+        else:
+            print(u"\u001b[38;5;237m" + 2*" " + temp)
+    

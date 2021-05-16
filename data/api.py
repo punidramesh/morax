@@ -5,6 +5,7 @@ load_dotenv()
 import asciichartpy
 
 s = requests.session()
+tag_coins = ["XLM","XRP"]
 
 def getAccountID():
 	accountID = {}
@@ -23,7 +24,7 @@ def getBalance(coin):
 	balance = []
 	URI = "https://api.coinbase.com/v2/accounts/"
 	for key, value in accountID.items():
-		if(coin == key):
+		if coin == key:
 			URI = URI + str(value)
 			data = s.get(URI, 
 				headers={'Authorization': "Bearer "	+ os.getenv('ACCESS_TOKEN'), 
@@ -41,7 +42,7 @@ def getAddress(coin):
 				headers={'Authorization': "Bearer "	+ os.getenv('ACCESS_TOKEN'), 
 						'CB-VERSION':"2017-12-09"
 				}).json()
-			if coin == "XLM":
+			if coin in tag_coins:
 				address = data["data"][0]['address']
 				memo = address[-10:]
 				address = address[:len(address) - 19]
@@ -58,6 +59,11 @@ def createAddress(coin):
 				headers={'Authorization': "Bearer "	+ os.getenv('ACCESS_TOKEN'), 
 						'CB-VERSION':"2017-12-09"
 				}).json()
+			if coin in tag_coins:
+				address = data["data"][0]['address']
+				memo = address[-10:]
+				address = address[:len(address) - 19]
+				return [address, memo]
 			return data["data"]["address"]
 
 def sendMoney(receiver_addr, amount, coin):
@@ -90,8 +96,8 @@ def sendMoney(receiver_addr, amount, coin):
 			return "Sent " + data["data"]["amount"]["amount"][1:] 
 			+ " to " + receiver_addr 
 
-def sendMoneyParams(receiver_addr,extra, amount, coin):
-    accountID = getAccountID()
+def sendMoneyWithTag(receiver_addr,tag, amount, coin):
+	accountID = getAccountID()
 	URI = "https://api.coinbase.com/v2/accounts/"
 	idem = ''.join(random.choice(string.ascii_uppercase 
 		+ string.ascii_lowercase + string.digits) for _ in range(16))
@@ -117,46 +123,9 @@ def sendMoneyParams(receiver_addr,extra, amount, coin):
 					'CB-2FA-Token': code
 					}, 
 			params = params).json()
+			return data
 			return "Sent " + data["data"]["amount"]["amount"][1:] 
 			+ " to " + receiver_addr 
-
-def requestMoney(sender_addr, amount, coin):
-	accountID = getAccountID()
-	URI = "https://api.coinbase.com/v2/accounts/"
-	params = {
-		'type':'request', 
-		'to':sender_addr,
-		'amount': amount, 
-		'currency': coin,
-	}
-	for key, value in accountID.items():
-		if(coin == key):
-			URI = URI + str(value) + "/transactions"
-			data = s.post(URI, 
-			headers={
-				'Authorization': "Bearer "+ os.getenv('ACCESS_TOKEN'), 
-				'CB-VERSION':"2017-12-09"}, 
-			params = params).json()
-			return "Request for " + data["data"]["amount"]["amount"] + " " + coin + "successful"
-
-def requestMoneyParams(sender_addr, extra, amount, coin):
-    accountID = getAccountID()
-	URI = "https://api.coinbase.com/v2/accounts/"
-	params = {
-		'type':'request', 
-		'to':sender_addr,
-		'amount': amount, 
-		'currency': coin,
-	}
-	for key, value in accountID.items():
-		if(coin == key):
-			URI = URI + str(value) + "/transactions"
-			data = s.post(URI, 
-			headers={
-				'Authorization': "Bearer "+ os.getenv('ACCESS_TOKEN'), 
-				'CB-VERSION':"2017-12-09"}, 
-			params = params).json()
-			return "Request for " + data["data"]["amount"]["amount"] + " " + coin + "successful"
 
 def getSpotPrice(coin):
 	
@@ -197,3 +166,9 @@ def getRSI(coin):
 		cfg=config
 		)
 	)
+
+print(sendMoneyWithTag("rw2ciyaNshpHe7bCHo4bRWq6pqqynnWKQg", 
+					"2280943035",
+					"0.001",
+					"XRP"
+))
