@@ -166,9 +166,3 @@ def getRSI(coin):
 		cfg=config
 		)
 	)
-
-print(sendMoneyWithTag("rw2ciyaNshpHe7bCHo4bRWq6pqqynnWKQg", 
-					"2280943035",
-					"0.001",
-					"XRP"
-))

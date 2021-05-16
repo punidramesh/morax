@@ -157,6 +157,10 @@ def stellar():
         else:
             print(u"\u001b[38;5;240m" + 2*" " + temp)
     
+    print(u"\u001b[37m" + " ")
+    if i == len(xlm) - 1:
+        chart.getChartData('XLM')
+    
 def ripple():
     xrp = open('assets/xrp.txt', 'r')
     xrp = xrp.readlines()
@@ -194,3 +198,46 @@ def ripple():
         else:
             print(u"\u001b[38;5;237m" + 2*" " + temp)
     
+    print(u"\u001b[37m" + " ")
+    if i == len(xrp) - 1:
+        chart.getChartData('XRP')
+
+def decentraland():
+    mana = open('assets/mana.txt', 'r')
+    mana = mana.readlines()
+    price = float(api.getSpotPrice('MANA'))
+    Balance = api.getBalance('MANA')
+    balance = float(Balance[:len(Balance) - 4])
+    address = api.getAddress('MANA')
+    i = 0
+    for i in range(len(mana)):
+        temp = mana[i].rstrip("\n")
+        if i == 6:
+            print(u"\u001b[38;5;202m" + 2*" " + temp, end = "")
+            print(u"\u001b[38;5;202m" + 4*' ' + "Decentraland")
+        elif i == 7:
+            print(u"\u001b[38;5;202m" + 2*" " + temp, end = "")
+            print(u"\u001b[37m" + 3*' ' + "-------------")
+        elif i == 8:
+            print(u"\u001b[38;5;202m" + 2*" " + temp, end = "")
+            print(u"\u001b[38;5;202m" + 4*' ' + "Current Price" + u"\u001b[37m" +": INR " + "{:.6f}".format(price))
+        elif i == 9:
+            print(u"\u001b[38;5;202m"   + 2*" " + temp, end = "")
+            print(u"\u001b[38;5;202m" +4*' ' + "Wallet Amount" + u"\u001b[37m" +": " + str(Balance))
+        elif i == 10:
+            print(u"\u001b[38;5;202m" + 2*" " + temp, end = "")
+            print(u"\u001b[38;5;202m" + 4*' ' + "Current Worth" + u"\u001b[37m" +": INR " + "{:.4f}".format(price * balance))
+        elif i == 11:
+            print(u"\u001b[38;5;202m" + 2*" " + temp, end = "")
+            print(u"\u001b[38;5;202m" + 4*' ' + "Address" + u"\u001b[37m" +": " + address[:23])
+        elif i == 12:
+            print(u"\u001b[38;5;202m" + 2*" " + temp, end = "")
+            print(4*' ' + u"\u001b[37m" + address[23:])
+        else:
+            print(u"\u001b[38;5;202m" + 2*" " + temp)
+    
+    print(u"\u001b[37m" + " ")
+    if i == len(mana) - 1:
+        chart.getChartData('MANA')
+
+decentraland()
