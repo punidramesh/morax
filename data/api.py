@@ -48,6 +48,8 @@ def getAddress(coin):
 				address = address[:len(address) - 19]
 				return [address, memo]
 			return data["data"][0]['address']
+		else:
+			return
 
 def createAddress(coin):
 	accountID = getAccountID()
@@ -65,6 +67,8 @@ def createAddress(coin):
 				address = address[:len(address) - 19]
 				return [address, memo]
 			return data["data"]["address"]
+		else:
+			return
 
 def sendMoney(receiver_addr, amount, coin):
 	accountID = getAccountID()
@@ -95,6 +99,8 @@ def sendMoney(receiver_addr, amount, coin):
 			params = params).json()
 			return "Sent " + data["data"]["amount"]["amount"][1:] 
 			+ " to " + receiver_addr 
+		else:
+			return
 
 def sendMoneyWithTag(receiver_addr,tag, amount, coin):
 	accountID = getAccountID()
@@ -126,6 +132,8 @@ def sendMoneyWithTag(receiver_addr,tag, amount, coin):
 			return data
 			return "Sent " + data["data"]["amount"]["amount"][1:] 
 			+ " to " + receiver_addr 
+		else:
+			return
 
 def getSpotPrice(coin):
 	

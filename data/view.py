@@ -240,4 +240,57 @@ def decentraland():
     if i == len(mana) - 1:
         chart.getChartData('MANA')
 
-decentraland()
+def bitcoincash():
+    bch = open('assets/btc.txt', 'r')
+    bch = bch.readlines()
+    price = float(api.getSpotPrice('BCH'))
+    Balance = api.getBalance('BCH')
+    balance = float(Balance[:len(Balance) - 4])
+    address = api.getAddress('BCH')
+    i = 0
+    for i in range(len(bch)):
+        temp = bch[i].rstrip("\n")
+        if i == 4:
+            print(u"\u001b[38;5;41m" + temp[0:7], end = "")
+            print(u"\u001b[37m" + temp[8:19], end = "")
+            print(u"\u001b[38;5;41m" + temp[19:], end = "")
+            print(u"\u001b[38;5;41m" + 3*' ' + "Bitcoin Cash")
+        elif i == 5:
+            print(u"\u001b[38;5;41m" + temp[0:7], end = "")
+            print(u"\u001b[37m" + temp[8:17], end = "")
+            print(u"\u001b[38;5;41m" + temp[17:], end = "")
+            print(u"\u001b[37m" + 3*' ' + "-----------")
+        elif i == 6:
+            print(u"\u001b[38;5;41m" + temp[0:7], end = "")
+            print(u"\u001b[37m" + temp[8:17], end = "")
+            print(u"\u001b[38;5;41m" + temp[17:], end = "")
+            print(u"\u001b[38;5;41m" + 3*' ' + "Current Price" + u"\u001b[37m" +": INR " + "{:.6f}".format(price))
+        elif i == 7:
+            print(u"\u001b[38;5;41m" + temp, end = "")
+            print(u"\u001b[38;5;41m" + 2*' ' + "Wallet Amount" + u"\u001b[37m" +": " + str(Balance))
+        elif i == 8:
+            print(u"\u001b[38;5;41m" + temp[0:7], end = "")
+            print(u"\u001b[37m" + temp[8:17], end = "")
+            print(u"\u001b[38;5;41m" + temp[17:], end = "")
+            print(u"\u001b[38;5;41m" + 3*' ' + "Current Worth" + u"\u001b[37m" +": INR " + "{:.4f}".format(price * balance))
+        elif i == 9:
+            print(u"\u001b[38;5;41m" + temp[0:7], end = "")
+            print(u"\u001b[37m" + temp[8:20], end = "")
+            print(u"\u001b[38;5;41m" + temp[20:])
+            print(u"\u001b[38;5;41m" + 11*' ' + "Address" + u"\u001b[37m" +": " + api.getAddress('BCH'))
+        elif i == 10:
+            print(u"\u001b[38;5;41m" + temp[0:7], end = "")
+            print(u"\u001b[37m" + temp[8:20], end = "")
+            print(u"\u001b[38;5;41m" + temp[20:])
+        elif i == 11:
+            print(u"\u001b[38;5;41m" + temp[0:7], end = "")
+            print(u"\u001b[37m" + temp[8:18], end = "")
+            print(u"\u001b[38;5;41m" + temp[18:])
+        else:
+            print(u"\u001b[38;5;41m" + temp)
+    
+    print(u"\u001b[37m" + " ")
+    if i == len(bch) - 1:
+        chart.getChartData('BCH')
+
+bitcoincash()
