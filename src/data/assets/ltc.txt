@@ -1,0 +1,14 @@
+          {c1}MMMMMMMMMM          
+         {c1}.MMMMMMMMM:.          
+        {c1}.:MMMMMMMM.           
+        {c1}.MMMMMMMM:.           
+       {c1}.MMMMMMMMM.             
+       {c1}:MMMMMMMM:....          
+      {c1}.MMMMMMMMMMMM.           
+  {c1}....:MMMMMMMM:::..           
+  {c1}.MMMMMMMMMMMM:.              
+ {c1}.:::MMMMMMMMM.                
+   {c1}.:MMMMMMMM:..............  
+   {c1}.MMMMMMMMMMMMMMMMMMMMMM:.  
+  {c1}.:MMMMMMMMMMMMMMMMMMMMMM.   
+  {c1}MMMMMMMMMMMMMMMMMMMMMMMM.   

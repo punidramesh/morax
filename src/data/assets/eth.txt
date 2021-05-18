@@ -1,0 +1,23 @@
+           {c1}:
+          {c1}M:
+         {c1}MM:::
+        {c1}MMM::::
+       {c1}MMMM:::::          
+     {c1}MMMMMM:::::;         
+    {c1}MMMMMMM;:::::;        
+   {c1}MMMMMMM  *;::';;       
+  {c1}MMMMM  *;:M  ;:';;      
+ {c1}MMM   *::':MMMM *:;;     
+{c1}MM   ;::::::MMMMMMM  * 
+  {c1}::::::::::MMMMMMMM 
+{c1}*;   ;::::::MMMMMM  M
+ {c1};":*  *::':MMMM MMM
+  {c1};"":*  *;:M  MMMM
+   {c1};"""';   MMMMMM
+    {c1}:""""';MMMMMM
+     {c1}:"""""MMMMM
+      {c1}:""""MMMM
+       {c1}:"""MM
+        {c1}:""M
+         {c1}:M
+          {c1}:

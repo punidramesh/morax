@@ -1,0 +1,50 @@
+<html>
+	<style>
+		*
+		{
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		*:before, *:after {
+		box-sizing: border-box;
+		}
+		html, body {
+			max-width: 100%;
+			background-color:  #ffffff;
+		}
+		body
+		{
+			background-color:  #ffffff;
+			overflow-x: hidden; 
+			text-rendering: optimizeLegibility;
+
+		}
+		.info{
+			position:absolute;
+			height: 100vh;
+			width: 100%;
+			text-align: center;
+		}
+		.center{
+			margin-top: 30vh;
+		}
+		h1, h2 {
+			font-family: Fira Sans;
+			color: #27303b;
+		}
+		h1{
+			font-size: 10rem;
+		}
+		h2{
+			font-size: 2rem;
+			margin-top: 20px;
+		}
+	</style>
+	<body>
+		<div style = "position:absolute;" class = "info">
+			<img height = "100px" class = "center" src = "{{url_for('static', filename='in-progress.svg')}}">
+			<h2>Authentication in-progress, please wait...</h2>
+    	</div>
+	</body>
+</html>
