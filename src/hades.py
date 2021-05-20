@@ -27,11 +27,11 @@ def start():
 
 @cli.command(name = 'wallet')
 def wallet():
-	view.selectCoin(os.getenv('COIN'))
+	view.selectCoin(api.getCoin())
 
 @cli.command(name = 'graph')
 def graph():
-	chart.getChartData(os.getenv('COIN'))
+	chart.getChartData(api.getCoin())
 
 @cli.command(name = 'switch')
 def switch():
@@ -44,6 +44,9 @@ def genState():
 	dotenv.set_key(dotenv_file, 'STATE', state)
 
 def init():
+	if os.getenv('LOGIN_STATE') == "FALSE":
+		login()
+		return
 	if time.time() - float(os.getenv('TIME')) <= 7200:
 		renewAccessToken()
 	else:

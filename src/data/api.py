@@ -18,8 +18,18 @@ def getAccountID():
 	for i in data["data"]:
 		if len(i['id']) > 5:
 			accountID[i['balance']['currency']] = i['id']
-			dotenv.set_key(dotenv_file, 'COIN', i['currency']['code'])
 	return accountID
+
+def getCoin():
+	accountID = {}
+	URI = "https://api.coinbase.com/v2/accounts"
+	data = s.get(URI, 
+		headers={'Authorization': "Bearer "	+ os.getenv('ACCESS_TOKEN'), 
+				'CB-VERSION':"2017-12-09"
+		}).json()
+	for i in data["data"]:
+		if len(i['id']) > 5:
+			return i['currency']['code']
 
 def getBalance(coin):
 	accountID = getAccountID()

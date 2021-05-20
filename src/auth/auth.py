@@ -56,6 +56,7 @@ def saveInfo(access_token, refresh_token):
 	dotenv.set_key(dotenv_file, 'TIME', str(time.time()))
 	dotenv.set_key(dotenv_file, 'ACCESS_TOKEN', access_token)
 	dotenv.set_key(dotenv_file, 'REFRESH_TOKEN', refresh_token)
+	dotenv.set_key(dotenv_file, 'LOGIN_STATE', "TRUE")
 
 def renewAccessToken():
 	REFRESH_TOKEN = os.getenv('REFRESH_TOKEN')
