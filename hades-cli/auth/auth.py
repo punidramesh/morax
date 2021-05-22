@@ -20,8 +20,6 @@ REDIRECT_URL = os.getenv('REDIRECT_URL')
 clientID = os.getenv('CLIENTID')
 secret = os.getenv('CLIENT_SECRET')
 STATE = os.getenv('STATE')
-access_token = ""
-refresh_token = ""
 
 #default route
 @app.route('/')
@@ -34,14 +32,17 @@ def hello():
 @app.route('/auth/redirect')
 def getResponse():
 	code = request.args.get("code")
+	at = None
 	try:
 		if code != None:
 			ACCESS_URI = f"https://www.coinbase.com/oauth/token?grant_type=authorization_code&code={code}&client_id={clientID}&client_secret={secret}&redirect_uri={REDIRECT_URL}"
-			at = requests.post(ACCESS_URI).json()
-			access_token = at['access_token']
-			refresh_token = at['refresh_token']
-
-			if access_token == '' or refresh_token == '':
+		
+			try:	
+				at = requests.post(ACCESS_URI).json()
+				access_token = at['access_token']
+				refresh_token = at['refresh_token']
+			except Exception as err:
+				print("Error : ", err)
 				return render_template('error.html')
 
 			saveInfo(access_token, refresh_token)
@@ -59,10 +60,13 @@ def saveInfo(access_token, refresh_token):
 def renewAccessToken():
 	REFRESH_TOKEN = os.getenv('REFRESH_TOKEN')
 	REFRESH_URI = f"https://api.coinbase.com/oauth/token?grant_type=refresh_token&client_id={clientID}&client_secret={secret}&refresh_token={REFRESH_TOKEN}"
-	at = requests.post(REFRESH_URI).json()
-	access_token = at['access_token']
-	refresh_token = at['refresh_token']
-	saveInfo(access_token, refresh_token)
+	try:	
+		at = requests.post(REFRESH_URI).json()
+		accessToken = at['access_token']
+		refreshToken = at['refresh_token']
+	except Exception as err:
+		print("Error : Unable to fetch access token, please login again")
+	saveInfo(accessToken, refreshToken)
 
 def shutdown_server():
 	func = request.environ.get('werkzeug.server.shutdown')
