@@ -1,9 +1,10 @@
 import api, chart
+from halo import Halo
 
 def printInfo(coin, C, name):
     info = fetchData(coin)
     coin = coin.lower()
-    txt = open(f"assets/{coin}.txt", 'r')
+    txt = open(f"data/assets/{coin}.txt", 'r')
     txt = txt.readlines()
     tag_coins = ["XLM", "XRP"]
     tag = {"XLM" : "Memo", "XRP": "Tag"}
@@ -12,9 +13,9 @@ def printInfo(coin, C, name):
     data = [
         C[0]  + name,
         C[0]  + "-------",
-        C[0]  + "Current Price" + C[1] +": " + info[0],
+        C[0]  + "Current Price" + C[1] +":" + info[0],
         C[0]  + "Wallet Amount" + C[1] +": " + info[1],
-        C[0]  + "Current Worth" + C[1] +": " + info[2],
+        C[0]  + "Current Worth" + C[1] +":" + info[2],
     ]
     if coin.upper() in tag_coins:
         data.append(C[0]  + "Address" + C[1] +": " + info[3][0][:26])
@@ -44,10 +45,7 @@ def printInfo(coin, C, name):
         else:
             print(temp)
 
-    print("\u001b[37m")
-    if i == len(txt) - 1:
-        chart.getChartData(coin.upper())
-
+@Halo(text='Fetching your wallet info 🧞‍♀️', spinner='dots')
 def fetchData(coin):
     price = float(api.getSpotPrice(coin))
     Balance = api.getBalance(coin)
@@ -57,38 +55,54 @@ def fetchData(coin):
     price = " INR " + "{:.6f}".format(price)
     return [price, Balance, worth, address]
 
-def bitcoin():
+def selectCoin(coin):
+    if coin == 'BTC':
+        Bitcoin()
+    elif coin == 'ETH':
+        Ethereum()
+    elif coin == 'LTC':
+        Litecoin()
+    elif coin == 'XRP':
+        Ripple()
+    elif coin == 'XLM':
+        Stellar()
+    elif coin == 'MANA':
+        Decentraland()
+    elif coin == 'BCH':
+        Bitcoincash()
+
+def Bitcoin():
     coin = "Bitcoin"
     C1 = "\u001b[38;5;215m"
     C2 = "\u001b[37m"
     printInfo("BTC", [C1,C2], coin)
 
-def ethereum():
+def Ethereum():
     coin = "Ethereum"
     C1 = "\u001b[38;5;105m"
     C2 = "\u001b[37m"
     printInfo("ETH", [C1,C2], coin)
 
-def litecoin():
+def Litecoin():
     coin = "Litecoin"
     C1 = "\u001b[38;5;246m"
     C2 = "\u001b[37m"
     printInfo("LTC", [C1,C2], coin)
     
 
-def stellar():
+def Stellar():
     coin = "Stellar Lumens"
     C1 = "\u001b[38;5;240m"
     C2 = "\u001b[37m"
     printInfo("XLM", [C1,C2], coin)
     
-def ripple():
+def Ripple():
     coin = "Ripple"
     C1 = "\u001b[38;5;237m"
     C2 = "\u001b[37m"
     printInfo("XRP", [C1,C2], coin)
 
-def decentraland():
+def Decentraland():
     coin = "Decentraland"
     C1 = "\u001b[38;5;203m"
     C2 = "\u001b[37m"
@@ -97,10 +111,8 @@ def decentraland():
     C5 = "\u001b[38;5;196m"
     printInfo("MANA", [C1,C2,C3,C4,C5], coin)
 
-def bitcoincash():
+def Bitcoincash():
     coin = "Bitcoin Cash"
     C1 = "\u001b[38;5;41m"
     C2 = "\u001b[37m"
     printInfo("BCH", [C1,C2], coin)
-
-bitcoincash()

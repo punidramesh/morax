@@ -1,5 +1,6 @@
-import requests, os, datetime, time, json, asciichartpy
+import requests, os, datetime, time, json, asciichartpy, click
 from dotenv import load_dotenv
+from halo import Halo
 load_dotenv()
 KEY = os.getenv('NOOMICS_API_KEY')
 
@@ -16,6 +17,7 @@ def getTime(curr):
         day = str(curr.day)
     return [str(curr.year), month, day]
 
+@Halo(text='Fetching chart data 📈', spinner='dots')
 def getChartData(coin): 
     l1 = getTime(datetime.datetime.fromtimestamp(time.time() - 3600.0*24.0*7.0*4.0))
     start = l1[0] + "-" + l1[1] + "-" + l1[2]
@@ -31,6 +33,11 @@ def getChartData(coin):
             asciichartpy.default, 
         ]
     }
+    click.echo()
+    click.echo(
+        click.style("{}'s state right now !".format(coin), fg='green', bold=True)
+    )
+    click.echo()
     print(asciichartpy.plot( prices,
         cfg=config
         )

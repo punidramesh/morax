@@ -1,0 +1,3 @@
+graft hades-cli/auth
+graft hades-cli/data
+recursive-include hades-cli *.env
