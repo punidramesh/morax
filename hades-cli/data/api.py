@@ -1,5 +1,4 @@
 import requests, os, json, random, string, sys, dotenv
-from binance.client import Client
 from halo import Halo
 
 #Load env variables
@@ -122,11 +121,6 @@ def createAddress(coin):
 		return response_json["data"][0]["address"]
 
 def getSpotPrice(coin):
-	if coin == "XRP":
-		client = Client(os.getenv('BINANCE_API_KEY'), os.getenv('BINANCE_SECRET_KEY'))
-		tickers = client.get_avg_price(symbol='XRPUSDT')
-		usdt = float(getSpotPrice('USDT'))
-		return float(tickers['price'])*usdt
 	try:
 		session = requests.Session()
 		currency = coin+"-INR"
@@ -135,14 +129,13 @@ def getSpotPrice(coin):
 			headers={'Authorization': "Bearer "	+ os.getenv('ACCESS_TOKEN'),
 					'CB-VERSION':"2017-12-09"
 			})
-	except requests.exceptions.HTTPError as http_err:
-		print(f"HTTP error occurred: {http_err}")
-	except Exception as err:
-		print(f"An error ocurred: {err}")
-	finally:
 		response_json = response.json()
 		keys = response_json.keys()
 		if "data" in keys:
 			return response_json['data']['amount']
 		else:
 			return "Data unavailable"
+	except requests.exceptions.HTTPError as http_err:
+		print(f"HTTP error occurred: {http_err}")
+	except Exception as err:
+		print(f"An error ocurred: {err}")

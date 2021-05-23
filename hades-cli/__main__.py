@@ -51,6 +51,7 @@ def genState():
 def init():
 	if os.getenv('LOGIN_STATE') == None:
 		if os.getenv('CLIENTID') == None and os.getenv('CLIENT_SECRET') == None:
+			dotenv.load_dotenv(dotenv_file)
 			output("Let's get you setup 🪄", 'bright_white')
 			output("Head over to your Coinbase account and under the API tab create a new OAuth Application 👩‍💻", 'bright_white')
 			output("Make a note of the CLIENTID and the CLIENT_SECRET, I'll need it 😉", 'bright_white')
@@ -64,17 +65,11 @@ def init():
 			redirectUrl = input()
 			dotenv.set_key(dotenv_file, 'REDIRECT_URL', redirectUrl)
 
-		if os.getenv('NOOMICS_API_KEY') == None and os.getenv('BINANCE_API_KEY') == None and os.getenv('BINANCE_SECRET_KEY') == None:
-			output("I also use data from Noomics and Binance to function, I'll need their API keys to proceed 😊", 'bright_white')
+		if os.getenv('NOOMICS_API_KEY') == None:
+			output("I also use data from Noomics to function, I'll need an API key to proceed 😊", 'bright_white')
 			output("Enter your Noomics API key : ", 'blue')
 			noomics = input()
 			dotenv.set_key(dotenv_file, 'NOOMICS_API_KEY', noomics)
-			output("Enter your Binance API key : ", 'blue')
-			binance_api = input()
-			dotenv.set_key(dotenv_file, 'BINANCE_API_KEY', binance_api)
-			output("Enter your Binance Secret key : ", 'blue')
-			binance_secret = input()
-			dotenv.set_key(dotenv_file, 'BINANCE_SECRET_KEY', binance_secret)
 			output("That's all the info I need, thanks ! 😊", "yellow")
 			login()
 

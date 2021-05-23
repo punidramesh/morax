@@ -27,7 +27,7 @@ setup(
         "Programming Language :: Python :: 3 :: Only",
     ],
     python_requires=">=3.4",
-    description="A slick CLI tool to monitor coinbase crypto.",
+    description="A slick CLI tool to monitor coinbase crypto assets.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     author="Punid Ramesh",

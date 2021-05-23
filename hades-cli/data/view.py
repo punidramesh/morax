@@ -11,8 +11,8 @@ def printInfo(coin, C, name):
     txt = open(f"{coin}.txt", 'r')
     os.chdir(path)
     txt = txt.readlines()
-    tag_coins = ["XLM", "XRP"]
-    tag = {"XLM" : "Memo", "XRP": "Tag"}
+    tag_coins = ["XLM"]
+    tag = {"XLM" : "Memo"}
     j = -4
     i = 0
     data = [
@@ -67,8 +67,6 @@ def selectCoin(coin):
         Ethereum()
     elif coin == 'LTC':
         Litecoin()
-    elif coin == 'XRP':
-        Ripple()
     elif coin == 'XLM':
         Stellar()
     elif coin == 'MANA':
@@ -98,12 +96,6 @@ def Stellar():
     C1 = "\u001b[38;5;240m"
     C2 = "\u001b[37m"
     printInfo("XLM", [C1,C2], coin)
-    
-def Ripple():
-    coin = "Ripple"
-    C1 = "\u001b[38;5;237m"
-    C2 = "\u001b[37m"
-    printInfo("XRP", [C1,C2], coin)
 
 def Decentraland():
     coin = "Decentraland"
