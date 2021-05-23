@@ -1,10 +1,15 @@
-import api, chart
+import api, chart, os, pathlib
 from halo import Halo
 
 def printInfo(coin, C, name):
     info = fetchData(coin)
     coin = coin.lower()
-    txt = open(f"data/assets/{coin}.txt", 'r')
+    path = os.getcwd()
+    p = str(pathlib.Path(__file__).parent.absolute())
+    p1 = os.path.join(p,"assets")
+    os.chdir(p1)
+    txt = open(f"{coin}.txt", 'r')
+    os.chdir(path)
     txt = txt.readlines()
     tag_coins = ["XLM", "XRP"]
     tag = {"XLM" : "Memo", "XRP": "Tag"}
@@ -13,13 +18,13 @@ def printInfo(coin, C, name):
     data = [
         C[0]  + name,
         C[0]  + "-------",
-        C[0]  + "Current Price" + C[1] +":" + info[0],
+        C[0]  + "Current Price" + C[1] +": " + info[0],
         C[0]  + "Wallet Amount" + C[1] +": " + info[1],
-        C[0]  + "Current Worth" + C[1] +":" + info[2],
+        C[0]  + "Current Worth" + C[1] +": " + info[2],
     ]
     if coin.upper() in tag_coins:
         data.append(C[0]  + "Address" + C[1] +": " + info[3][0][:26])
-        data.append(C[0] + info[3][0][26:])
+        data.append(C[0] + C[1] + info[3][0][26:])
         data.append(C[0]  + tag[coin.upper()] + C[1] +": " + info[3][1])
     else:
         if coin.upper() == "MANA":
@@ -68,8 +73,6 @@ def selectCoin(coin):
         Stellar()
     elif coin == 'MANA':
         Decentraland()
-    elif coin == 'BCH':
-        Bitcoincash()
 
 def Bitcoin():
     coin = "Bitcoin"
@@ -110,9 +113,3 @@ def Decentraland():
     C4 = "\u001b[38;5;11m"
     C5 = "\u001b[38;5;196m"
     printInfo("MANA", [C1,C2,C3,C4,C5], coin)
-
-def Bitcoincash():
-    coin = "Bitcoin Cash"
-    C1 = "\u001b[38;5;41m"
-    C2 = "\u001b[37m"
-    printInfo("BCH", [C1,C2], coin)

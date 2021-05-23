@@ -28,20 +28,6 @@ def graph():
 	coin = api.getCoin()
 	chart.getChartData(api.getCoin())
 
-@cli.command(name = 'switch')
-def switch():
-	output("I'll need you to authorize me to switch wallets 😁", 'yellow')
-	time.sleep(2)
-	login()
-
-@cli.command(name = 'address')
-def switch():
-	output("Use this address to receive new payments 🧧", 'yellow')
-	try:
-		click.echo(api.createAddress(api.getCoin()))
-	except Exception as err:
-		output("Unable to fetch an address 😔", 'red')
-
 @cli.command(name = 'refresh')
 def refresh():
 	try:
@@ -50,12 +36,6 @@ def refresh():
 	except Exception as err:
 		output("Failed to renewed access token, please login again", 'red')
 		login()
-
-@cli.command(name = 'reset')
-def reset():
-	output("Good Bye 🥲", 'bright_white')
-	subprocess.call("rm -rf .env",shell = True)
-	subprocess.call("touch .env",shell = True)
 
 @cli.command(name = 'switch')
 def switch():

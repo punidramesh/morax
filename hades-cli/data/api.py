@@ -122,14 +122,13 @@ def createAddress(coin):
 		return response_json["data"][0]["address"]
 
 def getSpotPrice(coin):
+	if coin == "XRP":
+		client = Client(os.getenv('BINANCE_API_KEY'), os.getenv('BINANCE_SECRET_KEY'))
+		tickers = client.get_avg_price(symbol='XRPUSDT')
+		usdt = float(getSpotPrice('USDT'))
+		return float(tickers['price'])*usdt
 	try:
 		session = requests.Session()
-		if coin == "XRP":
-			client = Client(os.getenv('BINANCE_API_KEY'), os.getenv('BINANCE_SECRET_KEY'))
-			tickers = client.get_avg_price(symbol='XRPUSDT')
-			usdt = float(getSpotPrice('USDT'))
-			return float(tickers['price'])*usdt
-
 		currency = coin+"-INR"
 		URI = f"https://api.coinbase.com/v2/prices/{currency}/spot"
 		response = session.get(URI,
