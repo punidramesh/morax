@@ -32,6 +32,7 @@ def getResponse():
 	clientID = os.getenv('CLIENTID')
 	secret = os.getenv('CLIENT_SECRET')
 	STATE = os.getenv('STATE')
+
 	try:
 		if code != None:
 			ACCESS_URI = f"https://www.coinbase.com/oauth/token?grant_type=authorization_code&code={code}&client_id={clientID}&client_secret={secret}&redirect_uri={REDIRECT_URL}"
