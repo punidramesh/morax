@@ -29,7 +29,7 @@ $ pip install morax
 
 ## Usage
 
-⚠️  It is to be noted that this is a proof of concept and by using it, you hereby agree that I'm not responsible for any issues that may occur.
+⚠️   It is to be noted that this is a proof of concept and by using it, you hereby agree that I'm not responsible for any issues that may occur. Currently MacOS and Linux distributions are supported.
 
 ## Initialization
 
