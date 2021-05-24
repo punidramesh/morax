@@ -11,7 +11,6 @@
 [![forthebadge](https://forthebadge.com/images/badges/made-with-python.svg)](https://forthebadge.com)
 [![forthebadge](https://forthebadge.com/images/badges/not-a-bug-a-feature.svg)](https://forthebadge.com)
 [![forthebadge](https://forthebadge.com/images/badges/open-source.svg)](https://forthebadge.com)
-[![forthebadge](https://forthebadge.com/images/badges/works-on-my-machine.svg)](https://forthebadge.com)
 [![forthebadge](https://forthebadge.com/images/badges/you-didnt-ask-for-this.svg)](https://forthebadge.com)
 
 
@@ -19,6 +18,8 @@
 Morax aims to provide monitoring of Coinbase assets on the command line. It capable of fetching the  wallet balance, wallet worth, wallet address and a graph of the crypto asset's price for the day.
 
 <br/>
+
+<p align = "center"><img src = "assets/demo.gif"></p>
 
 ## Installation
 
@@ -28,12 +29,12 @@ $ pip install morax
 
 ## Usage
 
-⚠️ It is to be noted that this is a proof of concept and by using it, you hereby agree that I'm not responsible for any issues that may occur.
+⚠️  It is to be noted that this is a proof of concept and by using it, you hereby agree that I'm not responsible for any issues that may occur.
 
 ## Initialization
 
 ```
-morax init
+morax -l
 ```
 
 ## Authentication
@@ -41,7 +42,7 @@ morax init
 This tool uses OAuth2.0 for authenication. Since OAuth2.0 requires a redirect URL, Refer to [Hades-AuthPage](https://github.com/punidramesh/Hades-AuthPage) containing the source code used to setup a server to return the code parameter required to authenticate the user. Coinbase issues an access token for each wallet (BTC, ETH, LTC, etc), hence using this method of authentication, the user can only access the wallet they selected on the login page. To switch to other wallets, a 'switch' command is provided which will take the user back to Coinbase to authorize another wallet.
 
 ## Commands
-* init
+* login
 * wallet
 * switch
 * graph
@@ -61,7 +62,7 @@ If this command is run within 2 hours of login, the access token is renewed for 
 ### Usage
 
 ```
-morax init
+morax -i
 ```
 
 ## wallet
@@ -71,7 +72,7 @@ Used to display wallet information including current spot price of crypto asset,
 ### Usage
 
 ```
-morax wallet
+morax -w
 ```
 
 ## graph
@@ -81,7 +82,7 @@ Used to visualize the price fluctuations of crypto asset as a graph.
 ### Usage
 
 ```
-morax graph
+morax -g
 ```
 
 ## switch
@@ -91,7 +92,7 @@ Used to switch to another wallet. Redirects the user back to Coinbase OAuth page
 ### Usage
 
 ```
-morax switch
+morax -s
 ```
 
 ## refresh
@@ -101,7 +102,7 @@ Force refresh access token.
 ### Usage
 
 ```
-morax refresh
+morax -r
 ```
 
 ## How to contribute?
