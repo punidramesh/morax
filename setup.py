@@ -14,9 +14,9 @@ with io.open("README.md", encoding="utf-8") as infile:
     long_description = infile.read()
 
 setup(
-    name="hades-cli",
+    name="morax",
     packages=find_packages(),
-    version="0.0.1",
+    version="0.1.0",
     license="MIT",
     classifiers=[
         "Programming Language :: Python",
@@ -46,7 +46,7 @@ setup(
     include_package_data=True,
     entry_points={
         "console_scripts": [
-            "hades=cli.__main__:main",
+            "morax=morax.__main__:start",
         ]
     }
 )

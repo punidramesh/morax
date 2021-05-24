@@ -81,15 +81,6 @@ def shutdown_server():
 def getScope():
 	scopes = ["wallet:accounts:read", #List user’s accounts and their balances
 				"wallet:addresses:read", #List account’s bitcoin or ethereum addresses
-				"wallet:addresses:create", #Create new bitcoin or ethereum addresses for wallets
-				"wallet:buys:read", #List account’s buys
-				"wallet:notifications:read", #List user’s notifications
-				"wallet:sells:read", #List account’s sells
-				"wallet:transactions:read", #List account’s transactions
-				"wallet:transactions:send", #Send bitcoin or ethereum
-				"wallet:transactions:request", #Request bitcoin or ethereum from a Coinbase user
-				"wallet:transactions:transfer", #Transfer funds between user’s two bitcoin or ethereum accounts
-				"wallet:withdrawals:create", #Create a new withdrawal
 	]
 
 	res = ""
