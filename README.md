@@ -39,7 +39,7 @@ morax -l
 
 ## Authentication
 
-This tool uses OAuth2.0 for authenication. Since OAuth2.0 requires a redirect URL, Refer to [Hades-AuthPage](https://github.com/punidramesh/Hades-AuthPage) containing the source code used to setup a server to return the code parameter required to authenticate the user. Coinbase issues an access token for each wallet (BTC, ETH, LTC, etc), hence using this method of authentication, the user can only access the wallet they selected on the login page. To switch to other wallets, a 'switch' command is provided which will take the user back to Coinbase to authorize another wallet.
+This tool uses OAuth2.0 for authenication. Since OAuth2.0 requires a redirect URL, Refer to [repo](https://github.com/punidramesh/Morax-AuthServer) containing the source code used to setup a server to return the code parameter required to authenticate the user. Coinbase issues an access token for each wallet (BTC, ETH, LTC, etc), hence using this method of authentication, the user can only access the wallet they selected on the login page. To switch to other wallets, a 'switch' command is provided which will take the user back to Coinbase to authorize another wallet.
 
 ## Commands
 * login
