@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="assets/logo.png" alt="morax" width="200" />
+    <img src="https://raw.githubusercontent.com/punidramesh/morax/main/assets/logo.png" alt="morax" width="200" />
 </div>
 
 <div align="center">
@@ -19,7 +19,8 @@ Morax aims to provide monitoring of Coinbase assets on the command line. It capa
 
 <br/>
 
-<p align = "center"><img src = "assets/demo.gif"></p>
+
+<p align = "center"><img src = "https://github.com/punidramesh/morax/raw/main/assets/demo.gif"></p>
 
 ## Installation
 

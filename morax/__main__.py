@@ -21,8 +21,12 @@ def genState():
 @click.option('--wallet', '-w', is_flag=True, help = "For viewing wallet information")
 @click.option('--refresh', '-r', is_flag=True, help = "Force refresh access token")
 @click.option('--graph', '-g', is_flag=True, help = "For displaying the crypto. asset's price graph")
-def start(login, switch, wallet, graph, refresh):
-	if login:
+@click.option('--version', '-v', is_flag=True, help = "version number")
+def start(login, switch, wallet, graph, refresh, version):
+	if version:
+		output("v1.0.0", "bright_white")
+		return
+	elif login:
 		init()
 		return
 	elif switch:
@@ -37,8 +41,7 @@ def start(login, switch, wallet, graph, refresh):
 	elif refresh:
 		tokenRefresh()
 		return
-		
-	click.echo("MORAX")
+	welcomeText()
 	click.echo()
 	click.echo("Enter morax --help to get a list of commmands")
 
@@ -136,6 +139,18 @@ def removeProcess():
 			continue
 
 		os.kill(int(data[1]), signal.SIGKILL)
+	
+def welcomeText():
+	path = os.getcwd()
+	p = str(pathlib.Path(__file__).parent.absolute())
+	p1 = os.path.join(p,"data","assets")
+	os.chdir(p1)
+	txt = open(f"ascii.txt", 'r')
+	txt = txt.readlines()
+	for i in range(len(txt)):
+		temp = txt[i].rstrip("\n")
+		click.secho(temp, fg = "bright_white")
+	os.chdir(path)
 
 if __name__ == "__main__":
    start()
