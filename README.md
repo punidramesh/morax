@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="assets/logo.png" alt="morax" width="200" />
+    <img src="https://raw.githubusercontent.com/punidramesh/morax/main/assets/logo.png" alt="morax" width="200" />
 </div>
 
 <div align="center">
@@ -19,17 +19,25 @@ Morax aims to provide monitoring of Coinbase assets on the command line. It capa
 
 <br/>
 
-<p align = "center"><img src = "assets/demo.gif"></p>
+
+<p align = "center"><img src = "https://github.com/punidramesh/morax/raw/main/assets/demo.gif"></p>
 
 ## Installation
 
 ```shell
-$ pip install morax
+$ pip3 install morax
 ```
 
 ## Usage
 
 ⚠️   It is to be noted that this is a proof of concept and by using it, you hereby agree that I'm not responsible for any issues that may occur. Currently MacOS and Linux distributions are supported.
+
+## Supported coins
+* BTC
+* ETH
+* LTC
+* MANA
+* XLM
 
 ## Initialization
 
@@ -39,7 +47,7 @@ morax -l
 
 ## Authentication
 
-This tool uses OAuth2.0 for authenication. Since OAuth2.0 requires a redirect URL, Refer to [repo](https://github.com/punidramesh/Morax-AuthServer) containing the source code used to setup a server to return the code parameter required to authenticate the user. Coinbase issues an access token for each wallet (BTC, ETH, LTC, etc), hence using this method of authentication, the user can only access the wallet they selected on the login page. To switch to other wallets, a 'switch' command is provided which will take the user back to Coinbase to authorize another wallet.
+This tool uses OAuth2.0 for authentication. Since OAuth2.0 requires a redirect URL, Refer to [repo](https://github.com/punidramesh/Morax-AuthServer) containing the source code used to setup a server to return the code parameter required to authenticate the user. Coinbase issues an access token for each wallet (BTC, ETH, LTC, etc), hence using this method of authentication, the user can only access the wallet they selected on the login page. To switch to other wallets, a 'switch' command is provided which will take the user back to Coinbase to authorize another wallet.
 
 ## Commands
 * login
@@ -104,6 +112,9 @@ Force refresh access token.
 ```
 morax -r
 ```
+## Want to add support for your favourite crypto asset ? 
+
+Please see [Guidelines](https://github.com/punidramesh/morax/blob/main/.github/add_coin.md) for more information.
 
 ## How to contribute?
 

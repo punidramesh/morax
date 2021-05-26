@@ -1,19 +1,9 @@
-import click
-import dotenv
-import os, subprocess, pathlib, time, string, random, requests, signal
+import yaml
+import os, subprocess, pathlib, time, string, random, requests, signal, click
 from webbrowser import open_new
 from auth.auth import renewAccessToken, getScope, app
 from data import api, view, chart
 from subprocess import Popen, PIPE
-
-#Load env variables
-dotenv_file = dotenv.find_dotenv()
-dotenv.load_dotenv(dotenv_file)
-
-
-def genState():
-	return ''.join(random.choice(string.ascii_uppercase 
-		+ string.ascii_lowercase + string.digits) for _ in range(16))
 
 @click.command(hidden=True)
 @click.option('--login', '-l', is_flag=True, help="Login into Coinbase account")
@@ -21,8 +11,12 @@ def genState():
 @click.option('--wallet', '-w', is_flag=True, help = "For viewing wallet information")
 @click.option('--refresh', '-r', is_flag=True, help = "Force refresh access token")
 @click.option('--graph', '-g', is_flag=True, help = "For displaying the crypto. asset's price graph")
-def start(login, switch, wallet, graph, refresh):
-	if login:
+@click.option('--version', '-v', is_flag=True, help = "version number")
+def start(login, switch, wallet, graph, refresh, version):
+	if version:
+		output("v1.0.5", "bright_white")
+		return
+	elif login:
 		init()
 		return
 	elif switch:
@@ -37,24 +31,26 @@ def start(login, switch, wallet, graph, refresh):
 	elif refresh:
 		tokenRefresh()
 		return
-		
-	click.echo("MORAX")
-	click.echo()
-	click.echo("Enter morax --help to get a list of commmands")
+	else:
+		welcomeText()
+		click.echo()
+		click.echo("Enter morax --help to get a list of commmands")
 
 def init():
-	if os.getenv('LOGIN_STATE') == None:
+	config = loadConfig()
+	if config.get('LOGIN_STATE') == None:
 		login()
 	else:
-		if os.getenv('TIME') == None:
+		if config.get('TIME') == None:
 			login()
-		elif time.time() - float(os.getenv('TIME')) > 7200: 
+		elif time.time() - float(config.get('TIME')) > 7200: 
 			output("⚠️  Access token expired", "yellow")
 			output("Redirecting you to login page to renew it", "yellow")
 			time.sleep(2)					
 			login()		
 		else:
 			refreshToken()
+
 def userWallet():
 	if verifyLogin():
 		view.selectCoin(api.getCoin())
@@ -88,7 +84,8 @@ def switchWallet():
 		output("Please login first 🥺", "bright_white")
 		
 def verifyLogin():
-	if os.getenv("ACCESS_TOKEN") != None and os.getenv("REFRESH_TOKEN") != None:
+	config = loadConfig()
+	if config.get("ACCESS_TOKEN") != None and config.get("REFRESH_TOKEN") != None:
 		return True
 	else:
 		return False
@@ -101,29 +98,27 @@ def output(inp, color):
 	click.echo()
 
 def login():
-	path = pathlib.Path().absolute()
-	dotenv.load_dotenv()
+	config = loadConfig()
 
 	#Kill any process running at PORT 6660
 	removeProcess()
-
 	output("In order to continue, you must login to your Coinbase account 💳", 'bright_white')
 	output("I'm taking you to the login page right now", 'bright_white')
 	time.sleep(2)
 
 	AUTH_URI = ('https://www.coinbase.com/oauth/' 
-		+ 'authorize?response_type=code&client_id=' + os.getenv('CLIENTID') + '&redirect_uri=' 
-		+ os.getenv('REDIRECT_URL') + '&scope=' + getScope() +'&code=' + '302')
-	
+		+ 'authorize?response_type=code&client_id=' + config.get('CLIENTID') + '&redirect_uri=' 
+		+ config.get('REDIRECT_URL') + '&scope=' + getScope() +'&code=' + '302')
+		
 	open_new(AUTH_URI)
-	
+		
 	#start the flask server for OAuth
 	app.run(port=6660)
 
 def refreshToken():
-
+	config = loadConfig()
 	#Fetch new access token using refresh token 
-	if time.time() - float(os.getenv('TIME')) <= 7200:
+	if time.time() - float(config.get('TIME')) <= 7200:
 		renewAccessToken()
 
 def removeProcess():
@@ -136,6 +131,30 @@ def removeProcess():
 			continue
 
 		os.kill(int(data[1]), signal.SIGKILL)
+	
+def welcomeText():
+	path = os.getcwd()
+	p = str(pathlib.Path(__file__).parent.absolute())
+	p1 = os.path.join(p,"data","assets")
+	os.chdir(p1)
+	txt = open(f"ascii.txt", 'r')
+	txt = txt.readlines()
+	for i in range(len(txt)):
+		temp = txt[i].rstrip("\n")
+		click.secho(temp, fg = "bright_white")
+	os.chdir(path)
+
+def loadConfig():
+	path = os.getcwd()
+	p = str(pathlib.Path(__file__).parent.absolute())
+	os.chdir(p)
+	with open("config.yaml", "r") as f:
+		os.chdir(path)
+		return yaml.safe_load(f)
+
+def genState():
+	return ''.join(random.choice(string.ascii_uppercase 
+		+ string.ascii_lowercase + string.digits) for _ in range(16))
 
 if __name__ == "__main__":
    start()

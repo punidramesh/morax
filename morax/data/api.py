@@ -1,9 +1,5 @@
-import requests, os, json, random, string, sys, dotenv
+import requests, os, json, random, string, sys, pathlib, yaml
 from halo import Halo
-
-#Load env variables
-dotenv_file = dotenv.find_dotenv()
-dotenv.load_dotenv(dotenv_file)
 
 from aiohttp import ClientSession
 tag_coins = ["XLM"]
@@ -11,9 +7,10 @@ supported = ["BTC", "ETH", "LTC", "XLM", "MANA"]
 
 def APICall(URI):
 	try:
+		config = loadConfig()
 		session = requests.Session()
 		response = session.get(URI,
-				headers={'Authorization': "Bearer "	+ os.getenv('ACCESS_TOKEN'),
+				headers={'Authorization': "Bearer "	+ config.get('ACCESS_TOKEN'),
 						'CB-VERSION':"2017-12-09"
 				})
 		return response.json()
@@ -99,3 +96,11 @@ def getSpotPrice(coin):
 			return ""
 	else:
 		print("Unsupported crypto asset")
+	
+def loadConfig():
+	path = os.getcwd()
+	p = str(pathlib.Path(__file__).parent.absolute().parent.absolute())
+	os.chdir(p)
+	with open("config.yaml", "r") as f:
+		os.chdir(path)
+		return yaml.safe_load(f)
