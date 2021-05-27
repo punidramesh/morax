@@ -60,6 +60,7 @@ def saveInfo(access_token, refresh_token):
 	config['TIME'] = str(time.time())
 	config['ACCESS_TOKEN'] = access_token
 	config['REFRESH_TOKEN'] = refresh_token
+	config['LOGIN_STATE'] = True
 
 	path = os.getcwd()
 	p = str(pathlib.Path(__file__).parent.absolute().parent.absolute())

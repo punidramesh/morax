@@ -20,15 +20,19 @@ def start(login, switch, wallet, graph, refresh, version):
 		init()
 		return
 	elif switch:
+		init()
 		switchWallet()
 		return
 	elif wallet:
+		init()
 		userWallet()
 		return
 	elif graph:
+		init()
 		coinGraph()
 		return
 	elif refresh:
+		init()
 		tokenRefresh()
 		return
 	else:
