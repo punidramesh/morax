@@ -16,7 +16,7 @@ with io.open("README.md", encoding="utf-8") as infile:
 setup(
     name="morax",
     packages=find_packages(),
-    version="1.0.4",
+    version="1.0.7",
     license="MIT",
     classifiers=[
         "Programming Language :: Python",

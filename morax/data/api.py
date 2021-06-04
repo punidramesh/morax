@@ -1,9 +1,9 @@
-import requests, os, json, random, string, sys, pathlib, yaml
+import requests, os, json, random, string, sys, pathlib, yaml,click
 from halo import Halo
 
 from aiohttp import ClientSession
 tag_coins = ["XLM"]
-supported = ["BTC", "ETH", "LTC", "XLM", "MANA"]
+supported = ["BTC", "ETH", "LTC", "XLM", "MANA", "DOGE"]
 
 def APICall(URI):
 	try:
@@ -15,9 +15,9 @@ def APICall(URI):
 				})
 		return response.json()
 	except requests.exceptions.HTTPError as http_err:
-		print(f"HTTP error occurred: {http_err}")
+		click.echo(f"HTTP error occurred: {http_err}")
 	except Exception as err:
-		print(f"An error ocurred: {err}")
+		click.echo(f"An error ocurred: {err}")
 	
 
 def getAccountID():
@@ -31,7 +31,7 @@ def getAccountID():
 				accountID[i['balance']['currency']] = i['id']
 		return accountID
 	else:
-		print("Unable to fetch accountID")
+		click.echo("Unable to fetch accountID")
 		return ""
 		
 
@@ -44,7 +44,7 @@ def getCoin():
 			if len(i['id']) > 5:
 				return i['currency']['code']
 	else:
-		print("Unable to determine crypto asset")
+		click.echo("Unable to determine crypto asset")
 
 def getBalance(coin):
 	if coin in supported:
@@ -55,9 +55,9 @@ def getBalance(coin):
 		if "data" in keys:
 			return response_json["data"][0]["balance"]["amount"] + " " + coin
 		else:
-			print("Unable to fetch balance")
+			click.echo("Unable to fetch balance")
 			return ""
-	print("Unsupported crypto asset")
+	click.echo("Unsupported crypto asset")
 
 def getAddress(coin):
 	if coin in supported:
@@ -81,7 +81,7 @@ def getAddress(coin):
 			else:
 				return ""
 	else:
-		print("Unsupported crypto asset")
+		click.echo("Unsupported crypto asset")
 
 def getSpotPrice(coin):
 	if coin in supported:
@@ -92,10 +92,10 @@ def getSpotPrice(coin):
 		if "data" in keys:
 			return response_json['data']['amount']
 		else:
-			print("Data unavailable") 
+			click.echo("Data unavailable") 
 			return ""
 	else:
-		print("Unsupported crypto asset")
+		click.echo("Unsupported crypto asset")
 	
 def loadConfig():
 	path = os.getcwd()

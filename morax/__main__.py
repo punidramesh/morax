@@ -14,7 +14,7 @@ from subprocess import Popen, PIPE
 @click.option('--version', '-v', is_flag=True, help = "version number")
 def start(login, switch, wallet, graph, refresh, version):
 	if version:
-		output("v1.0.5", "bright_white")
+		output("v1.0.7", "bright_white")
 		return
 	elif login:
 		init()

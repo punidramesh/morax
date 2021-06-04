@@ -71,6 +71,8 @@ def selectCoin(coin):
         Stellar()
     elif coin == 'MANA':
         Decentraland()
+    elif coin == 'DOGE':
+        Doge()
 
 def Bitcoin():
     coin = "Bitcoin"
@@ -105,3 +107,9 @@ def Decentraland():
     C4 = "\u001b[38;5;11m"
     C5 = "\u001b[38;5;196m"
     printInfo("MANA", [C1,C2,C3,C4,C5], coin)
+
+def Doge():
+    coin = "Dogecoin"
+    C1 = "\u001b[38;5;215m"
+    C2 = "\u001b[37m"
+    printInfo("DOGE", [C1,C2], coin)
