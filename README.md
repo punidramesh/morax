@@ -70,7 +70,7 @@ If this command is run within 2 hours of login, the access token is renewed for 
 ### Usage
 
 ```
-morax -i
+morax -l
 ```
 
 ## wallet
