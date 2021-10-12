@@ -15,7 +15,7 @@
 
 
 
-Morax aims to provide monitoring of Coinbase assets on the command line. It capable of fetching the  wallet balance, wallet worth, wallet address and a graph of the crypto asset's price for the day.
+Morax aims to provide monitoring of Coinbase assets on the command line. It is capable of fetching the  wallet balance, wallet worth, wallet address and a graph of the crypto asset's price for the day.
 
 <br/>
 
