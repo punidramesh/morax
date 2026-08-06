@@ -26,7 +26,7 @@ termcolor==1.1.0
 typing-extensions==3.10.0.0
 tzlocal==2.1
 ujson==5.4.0
-urllib3==1.26.4
+urllib3==1.26.5
 websockets==9.0.1
 Werkzeug==2.0.0
 yarl==1.6.3
